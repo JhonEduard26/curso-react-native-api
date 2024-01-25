@@ -32,7 +32,7 @@ export const getPokemonById = async (id: string) => {
       abilities: data.abilities,
       id: data.id,
       name: data.name,
-      sprite: data.sprites.other?.dream_world.front_default,
+      sprite: data.sprites.other['official-artwork'].front_default,
       types: data.types
     }
 

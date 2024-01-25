@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
-import { ScrollView, Text, View } from 'react-native'
+import { View } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
+
 import { getPokemons } from '../services'
+import { PokemonList } from '../components'
 
 export const HomeScreen = () => {
   const [pokemons, setPokemons] = useState([])
@@ -14,17 +16,10 @@ export const HomeScreen = () => {
   }, [])
 
   return (
-    <ScrollView>
-      <View>
-        {
-          pokemons.map(({id, name}) => (
-            <Text key={id}>
-              {name}
-            </Text>
-          ))
-        }
-      </View>
+    <View>
+      <PokemonList pokemons={pokemons} />
       <StatusBar style="auto" />
-    </ScrollView>
+    </View>
   )
 }
+
