@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { getPokemonById } from '../services'
+import { getBackgroundStats, setBackgroundColor } from '../utils'
 
 export const PokemonScreen = ({ route }: any) => {
   const { params } = route
@@ -35,12 +36,45 @@ export const PokemonScreen = ({ route }: any) => {
           ))
         }
       </View>
-      <Image source={{ uri: pokemon.sprite }} style={{ width: 220, height: 220 }} />
-      <View style={styles.abilities}>
-        <Text style={styles.titleAbility}>Abilities</Text>
+      <Image
+        source={{ uri: pokemon.sprite }}
+        style={{ width: 220, height: 220 }}
+      />
+      <View>
+        <Text style={styles.titleStats}>Stats</Text>
+        {
+          pokemon.stats.map(({ base_stat, stat }: any) => {
+            return (
+              <View key={stat.name} style={styles.stats}>
+                <Text style={{ textTransform: 'capitalize' }}>
+                  {stat.name}:
+                </Text>
+                <View style={styles.bgStats}>
+                  <Text style={{
+                    width: `${base_stat}%`,
+                    padding: 2,
+                    borderRadius: 4,
+                    color: 'white',
+                    backgroundColor: getBackgroundStats(base_stat)
+                  }}>
+                    {base_stat}
+                  </Text>
+                </View>
+              </View>
+            )
+          })
+        }
+      </View>
+      <Text style={styles.titleAbility}>Abilities</Text>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 6 }}>
         {
           pokemon.abilities.map(({ ability }: any) => (
-            <Text key={ability.name}>{ability.name}</Text>
+            <Text
+              key={ability.name}
+              style={[styles.ship, { backgroundColor: 'midnightblue', flexDirection: 'row' }]}
+            >
+              {ability.name}
+            </Text>
           ))
         }
       </View>
@@ -48,34 +82,9 @@ export const PokemonScreen = ({ route }: any) => {
   )
 }
 
-const setBackgroundColor = (type: string) => {
-  const colorMap: Record<string, string> = {
-    bug: 'lime',
-    dark: 'black',
-    dragon: 'darkblue',
-    electric: 'gold',
-    fairy: 'pink',
-    fighting: 'red',
-    fire: 'red',
-    flying: 'lightgray',
-    ghost: 'purple',
-    grass: 'green',
-    ground: 'sienna',
-    ice: 'lightblue',
-    normal: 'gray',
-    poison: 'blueviolet',
-    psychic: 'tomato',
-    rock: 'saddlebrown',
-    steel: 'gray',
-    water: 'blue',
-  };
-
-  return colorMap[type] || 'gray';
-};
-
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center'
+    alignItems: 'center',
   },
   title: {
     marginBottom: 16,
@@ -97,12 +106,25 @@ const styles = StyleSheet.create({
     textTransform: 'capitalize',
     color: 'white',
   },
+  titleStats: {
+    textAlign: 'center',
+    fontSize: 24,
+    fontWeight: '700',
+  },
+  stats: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  bgStats: {
+    width: 140,
+    marginBottom: 2,
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
   titleAbility: {
     fontSize: 24,
     fontWeight: '700',
     marginBottom: 8
   },
-  abilities: {
-
-  }
 })

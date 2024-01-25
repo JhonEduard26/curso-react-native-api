@@ -39,6 +39,7 @@ const Home = () => {
               tabBarIcon: ({ color, size }) => (
                 <MaterialIcons name={link.icon} color={color} size={size} />
               ),
+              headerShown: false,
             }}
           />
         ))

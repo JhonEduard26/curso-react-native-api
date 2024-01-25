@@ -2,6 +2,10 @@ import { pokeapiUrls } from './urls'
 
 export const getPokemons = async (limit = 151, offset = 0) => {
   try {
+    if (offset > 140) {
+      return []
+    }
+
     const apiUrl = pokeapiUrls.allPokemons(limit, offset)
     const response = await fetch(apiUrl)
 
@@ -33,7 +37,8 @@ export const getPokemonById = async (id: string) => {
       id: data.id,
       name: data.name,
       sprite: data.sprites.other['official-artwork'].front_default,
-      types: data.types
+      stats: data.stats,
+      types: data.types,
     }
 
     return pokemon

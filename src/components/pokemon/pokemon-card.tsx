@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import { Pressable, StyleSheet } from 'react-native'
 import { Image, Text, View } from 'react-native'
-import { PokemonScreen } from '../../screens'
 
 interface Props {
   id: number,
@@ -33,6 +32,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightskyblue',
     borderRadius: 8,
     borderWidth: 2,
+    margin: 8,
   },
   order: {
     textAlign: 'center'

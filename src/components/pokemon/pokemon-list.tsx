@@ -1,10 +1,14 @@
-import { FlatList, StyleSheet } from 'react-native'
+import { ActivityIndicator, FlatList, StyleSheet } from 'react-native'
 import { PokemonCard } from './pokemon-card'
+import { getPokemons } from '../../services'
 
-export const PokemonList = ({ pokemons }: any) => {
+export const PokemonList = ({ pokemons, setPokemons }: any) => {
 
   const loadMoreItems = () => {
-    console.log('load more items...')
+    getPokemons(20, pokemons.length)
+      .then((response) => {
+        setPokemons([...pokemons, ...response])
+      })
   }
 
   return (
@@ -17,6 +21,9 @@ export const PokemonList = ({ pokemons }: any) => {
       showsVerticalScrollIndicator={false}
       onEndReached={loadMoreItems}
       onEndReachedThreshold={0.2}
+      ListFooterComponent={
+        <ActivityIndicator size="large" style={styles.spinner} />
+      }
     />
   )
 }
@@ -25,5 +32,8 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     paddingVertical: 10
+  },
+  spinner: {
+    marginTop: 16
   }
 })
