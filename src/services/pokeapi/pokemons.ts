@@ -2,7 +2,7 @@ import { pokeapiUrls } from './urls'
 
 export const getPokemons = async (limit = 151, offset = 0) => {
   try {
-    if (offset > 140) {
+    if (offset > 160) {
       return []
     }
 
